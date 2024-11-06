@@ -48,9 +48,8 @@ const Login = () => {
       setApiError(null);
 
       try {
-        // API Integration (commented out for now)
-        /*
-        const response = await fetch('YOUR_API_ENDPOINT/login', {
+        
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -69,7 +68,7 @@ const Login = () => {
         const data = await response.json();
         // Store token or user data in localStorage if needed
         // localStorage.setItem('token', data.token);
-        */
+        
 
         // Navigate to dashboard
         navigate('/dashboard');

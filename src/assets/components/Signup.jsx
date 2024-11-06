@@ -55,11 +55,9 @@ const Signup = () => {
     if (validate()) {
       setIsLoading(true);
       setApiError(null);
-
+  
       try {
-        // API Integration (commented out for now)
-        /*
-        const response = await fetch('YOUR_API_ENDPOINT/signup', {
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/signup`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -70,18 +68,15 @@ const Signup = () => {
             role: formData.role,
           }),
         });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || 'Signup failed');
+  
+        // Check for JSON response type
+        const contentType = response.headers.get("content-type");
+        if (!response.ok || !contentType || !contentType.includes("application/json")) {
+          const errorText = await response.text();
+          throw new Error(`Unexpected response: ${errorText}`);
         }
-
+  
         const data = await response.json();
-        // Store token or user data in localStorage if needed
-        // localStorage.setItem('token', data.token);
-        */
-
-        // Route based on role
         navigate(formData.role === 'serviceProvider' ? '/dashboard' : '/');
       } catch (error) {
         setApiError(error.message);
@@ -90,6 +85,7 @@ const Signup = () => {
       }
     }
   };
+  
 
   return (
     <div 

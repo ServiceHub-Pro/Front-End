@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ArtisanList from '../components/ArtisanList';
 
 const Home = () => {
   return (
@@ -14,6 +15,9 @@ const Home = () => {
           Sign Up
         </button>
       </Link>
+      <div>
+      <ArtisanList />
+      </div>
     </div>
   );
 };
