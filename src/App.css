@@ -1,0 +1,25 @@
+.blur-background {
+    position: relative;
+    min-height: 100vh; /* Ensure it covers the full height */
+    overflow: hidden; /* Prevent overflow from the pseudo-element */
+  }
+  
+  .blur-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url(/* Insert your image URL here or use inline styles */);
+    background-size: cover;
+    background-position: center;
+    filter: blur(10px); /* Adjust the blur amount as needed */
+    z-index: 1; /* Make sure it sits behind your content */
+  }
+  
+  .content {
+    position: relative; /* Ensure content sits above the blurred background */
+    z-index: 2; /* Place it above the blurred background */
+  }
+  
