@@ -6,24 +6,25 @@ import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    {/* Toaster setup for notifications */}
     <Toaster
       position="top-center"
       toastOptions={{
-        // Customize default toast options
+        // Default toast options
         duration: 4000,
         style: {
-          background: '#363636',
-          color: '#fff',
+          background: '#363636', // Dark background for all toasts
+          color: '#fff',         // White text for readability
         },
-        // Customize success toast
+        // Success toast customization
         success: {
           duration: 3000,
           style: {
-            background: '#6D4C41', // Using your brown theme
+            background: '#6D4C41', // Brown theme background
             color: '#fff',
           },
         },
-        // Customize error toast
+        // Error toast customization
         error: {
           duration: 4000,
           style: {
