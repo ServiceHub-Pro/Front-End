@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import ArtisanList from '../components/ArtisanList';
 import HeroSection from './HeroSection';
 import { Search } from 'lucide-react';
+import AboutUs from './AboutUs';
 
 const Home = () => {
   return (
@@ -26,6 +27,10 @@ const Home = () => {
       {/* Artisan List */}
       <div>
         <ArtisanList />
+      </div>
+
+      <div>
+        <AboutUs/>
       </div>
     </div>
   );

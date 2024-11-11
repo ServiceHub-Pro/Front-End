@@ -15,7 +15,7 @@ function App() {
       element: <PageLayout />,
       children: [
         {
-          path: '/',
+          index: true,
           element: <Home />,
         },
       ],

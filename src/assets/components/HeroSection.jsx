@@ -56,7 +56,7 @@ const HeroSection = () => {
         <div className="space-x-4">
           <Link
             to="/signup"
-            className="inline-block px-8 py-3 bg-[#8D6E63] text-white text-lg font-semibold rounded-lg hover:bg-[#6D4C41] transition duration-300"
+            className="inline-block px-8 py-3 bg-[#B78E59] text-white text-lg font-semibold rounded-lg hover:bg-[#6D4C41] transition duration-300"
           >
             Become an Artisan
           </Link>
