@@ -1,32 +1,46 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({ user }) => {
   return (
-    <nav className="bg-blue-900 text-white py-4">
+    <nav className="bg-[#6A4E23] text-white py-4">
       <div className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="text-2xl font-bold">Artisan Connect</Link>
-        <form className="flex items-center">
-          <input 
-            type="search" 
-            placeholder="Find artisans near you" 
-            className="py-2 px-4 rounded-lg focus:outline-none focus:ring focus:ring-blue-500"
-          />
-          <button 
-            type="submit" 
-            className="bg-blue-900 text-white py-2 px-4 rounded-lg hover:bg-blue-800"
-          >
-            <i className="fas fa-search" />
-          </button>
-        </form>
-        <div className="flex items-center">
-          <i className="fas fa-bell text-lg mr-4" />
-          <Link to="/profile" className="text-lg mr-4">
-            <i className="fas fa-user" />
-          </Link>
-          <button className="bg-orange-500 text-blue-900 py-2 px-4 rounded-lg hover:bg-orange-700">
-            What do you do ?
-          </button>
+        {/* Logo/Brand Name */}
+        <Link to="/" className="text-2xl font-bold text-white">
+          Artisan Connect
+        </Link>
+
+        {/* Navigation Links */}
+        <div className="hidden md:flex space-x-8">
+          <Link to="/" className="hover:text-[#D4B18B] transition">Home</Link>
+          <Link to="/services" className="hover:text-[#D4B18B] transition">Services</Link>
+          <Link to="/about" className="hover:text-[#D4B18B] transition">About</Link>
+          <Link to="/contact" className="hover:text-[#D4B18B] transition">Contact</Link>
+        </div>
+
+        {/* User Profile and Notifications */}
+        <div className="flex items-center space-x-6">
+          <i className="fas fa-bell text-lg cursor-pointer hover:text-[#D4B18B]" />
+
+          {/* Conditionally show user details if logged in */}
+          {user ? (
+            <div className="flex items-center space-x-4">
+              <span className="text-sm font-semibold">{user.name}</span>
+              <Link to="/profile" className="hover:text-[#D4B18B]">
+                <i className="fas fa-user-circle text-2xl" />
+              </Link>
+            </div>
+          ) : (
+            // If no user logged in, show login/signup links
+            <div className="flex items-center space-x-4">
+              <Link to="/login" className="text-sm hover:text-[#D4B18B]">
+                Login
+              </Link>
+              <Link to="/signup" className="bg-[#D4B18B] text-[#6A4E23] py-2 px-4 rounded-lg hover:bg-[#B78E59]">
+                Sign Up
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </nav>

@@ -5,12 +5,14 @@ import ForgottenPassword from './assets/components/ForgottenPassword';
 import Signup from './assets/components/Signup';
 import PageLayout from './assets/layouts/PageLayout';
 import Home from './assets/components/Home';
+import Dashboard from './assets/components/Dashboard';
+import UserPage from './assets/components/UserPage'; // Add a user page
 
 function App() {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <PageLayout />, // Use PageLayout as the layout
+      element: <PageLayout />,
       children: [
         {
           path: '/',
@@ -30,11 +32,20 @@ function App() {
       path: '/forgottenpassword',
       element: <ForgottenPassword />,
     },
-    // Uncomment and add the Dashboard route when available
-    // {
-    //   path: '/dashboard',
-    //   element: <Dashboard />,
-    // },
+    {
+      path: '/dashboard',
+      element: <Dashboard />,
+    },
+    {
+      path: '/user',
+      element: <PageLayout />,
+      children: [
+        {
+          index: true, // This defines the default route for /user
+          element: <UserPage />,
+        },
+      ],
+    },
   ]);
 
   return <RouterProvider router={router} />;

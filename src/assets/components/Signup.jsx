@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, User, Phone, Mail, Lock, UserCog } from 'lucide-react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import formBgImage from "../../assets/img/drop.jpg";
+import formBgImage from "../../assets/img/architect.jpg";
 
-const Signup = () => {
+const SignupForm = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -13,26 +13,28 @@ const Signup = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setLoading(true);
 
     const formData = new FormData(event.target);
+    const name = formData.get("name");
+    const contact = formData.get("contact");
     const email = formData.get("email");
     const password = formData.get("password");
     const confirmPassword = formData.get("confirmPassword");
     const role = formData.get("role") || 'user';
 
+    // Check for password match and show toast before continuing
     if (password !== confirmPassword) {
       toast.error("Passwords do not match!");
-      setLoading(false);
       return;
     }
 
-    try {
-      const payload = { email, password, role };
-      console.log('Sending request to:', `${import.meta.env.VITE_BASE_URL}/signup`);
-      console.log('With payload:', payload);
+    // Show success toast before proceeding with async function
+    toast.info("Processing signup...");
+    setLoading(true);
 
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/signup`, {
+    try {
+      const payload = { name, contact, email, password, role };
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/users/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -41,10 +43,6 @@ const Signup = () => {
         body: JSON.stringify(payload),
       });
 
-      // Log the response details for debugging
-      console.log('Response status:', response.status);
-      console.log('Response headers:', response.headers);
-
       const contentType = response.headers.get("content-type");
       if (contentType && contentType.includes("application/json")) {
         const data = await response.json();
@@ -52,9 +50,8 @@ const Signup = () => {
           throw new Error(data.message || 'Signup failed');
         }
         toast.success("Sign Up Successful!");
-        navigate(role === 'serviceProvider' ? '/dashboard' : '/login');
+        setTimeout(() => navigate(role === 'serviceProvider' ? '/dashboard' : '/login'), 2000);
       } else {
-        // Handle non-JSON response
         const textResponse = await response.text();
         console.error('Received non-JSON response:', textResponse);
         throw new Error('Server returned unexpected response format');
@@ -67,11 +64,14 @@ const Signup = () => {
     }
   };
 
-  // Rest of your component remains the same
   return (
-    <div 
-      className="min-h-screen flex items-center justify-center bg-cover bg-center"
-      style={{ backgroundImage: `url(${formBgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+    <div
+      className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8 flex items-center justify-center"
+      style={{
+        backgroundImage: `url(${formBgImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
     >
       <ToastContainer
         position="top-right"
@@ -84,91 +84,144 @@ const Signup = () => {
         draggable
         pauseOnHover
       />
-      
-      <div className="w-full max-w-md bg-white bg-opacity-90 rounded-lg shadow-lg p-8">
-        <h2 className="text-2xl font-bold text-center text-[#5D4037] mb-4">Create an Account</h2>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-[#6D4C41] mb-1">Email</label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              required
-              className="w-full px-4 py-3 rounded-lg border border-[#8D6E63] focus:outline-none focus:ring-2 focus:ring-[#5D4037]"
-              placeholder="you@example.com"
-            />
-          </div>
 
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-[#6D4C41] mb-1">Password</label>
+      <div className="max-w-md w-full space-y-8 bg-white shadow-xl rounded-xl p-8">
+        <div className="space-y-2">
+          <h2 className="text-3xl font-bold text-gray-900 text-center">
+            Create Account
+          </h2>
+          <p className="text-gray-500 text-center text-sm">
+            Join our community and discover amazing services
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+          <div className="space-y-4">
             <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <User className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                required
+                className="pl-10 block w-full rounded-lg border border-gray-300 py-3 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                placeholder="Full Name"
+              />
+            </div>
+
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Phone className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                id="contact"
+                name="contact"
+                type="tel"
+                required
+                className="pl-10 block w-full rounded-lg border border-gray-300 py-3 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                placeholder="Contact Number"
+              />
+            </div>
+
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Mail className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                className="pl-10 block w-full rounded-lg border border-gray-300 py-3 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                placeholder="Email Address"
+              />
+            </div>
+
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Lock className="h-5 w-5 text-gray-400" />
+              </div>
               <input
                 id="password"
                 name="password"
                 type={showPassword ? 'text' : 'password'}
                 required
-                className="w-full px-4 py-3 rounded-lg border border-[#8D6E63] focus:outline-none focus:ring-2 focus:ring-[#5D4037]"
+                className="pl-10 block w-full rounded-lg border border-gray-300 py-3 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                placeholder="Password"
               />
               <button
                 type="button"
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#5D4037]"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                {showPassword ? 
+                  <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-500" /> : 
+                  <Eye className="h-5 w-5 text-gray-400 hover:text-gray-500" />
+                }
               </button>
             </div>
-          </div>
 
-          <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-[#6D4C41] mb-1">Confirm Password</label>
             <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Lock className="h-5 w-5 text-gray-400" />
+              </div>
               <input
                 id="confirmPassword"
                 name="confirmPassword"
                 type={showConfirmPassword ? 'text' : 'password'}
                 required
-                className="w-full px-4 py-3 rounded-lg border border-[#8D6E63] focus:outline-none focus:ring-2 focus:ring-[#5D4037]"
+                className="pl-10 block w-full rounded-lg border border-gray-300 py-3 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                placeholder="Confirm Password"
               />
               <button
                 type="button"
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#5D4037]"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               >
-                {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                {showConfirmPassword ? 
+                  <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-500" /> : 
+                  <Eye className="h-5 w-5 text-gray-400 hover:text-gray-500" />
+                }
               </button>
+            </div>
+
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <UserCog className="h-5 w-5 text-gray-400" />
+              </div>
+              <select
+                id="role"
+                name="role"
+                className="pl-10 block w-full rounded-lg border border-gray-300 py-3 text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              >
+                <option value="user">User</option>
+                <option value="serviceProvider">Service Provider</option>
+              </select>
             </div>
           </div>
 
           <div>
-            <label htmlFor="role" className="block text-sm font-medium text-[#6D4C41] mb-1">Register as:</label>
-            <select
-              id="role"
-              name="role"
-              className="w-full px-4 py-3 rounded-lg border border-[#8D6E63] focus:outline-none focus:ring-2 focus:ring-[#5D4037]"
+            <button
+              type="submit"
+              disabled={loading}
+              className="group relative w-full flex justify-center py-3 px-4 border border-transparent rounded-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-400 disabled:cursor-not-allowed transition-colors duration-200"
             >
-              <option value="user">User</option>
-              <option value="serviceProvider">Service Provider</option>
-            </select>
+              {loading ? "Creating account..." : "Create Account"}
+            </button>
           </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className={`w-full py-2 px-4 rounded-lg text-white font-medium 
-              ${loading ? 'bg-[#8D6E63] cursor-not-allowed' : 'bg-[#6D4C41] hover:bg-[#5D4037]'}
-            `}
-          >
-            {loading ? "Creating account..." : "Sign Up"}
-          </button>
-
-          <p className="text-center text-sm text-[#6D4C41]">
-            Already have an account? <Link to="/login" className="font-medium text-[#8D6E63]">Log in</Link>
-          </p>
+          <div className="text-sm text-center">
+            <span className="text-gray-500">Already have an account?</span>
+            <Link to="/login" className="text-blue-600 hover:text-blue-800 ml-1">
+              Sign in here
+            </Link>
+          </div>
         </form>
       </div>
     </div>
   );
 };
 
-export default Signup;
+export default SignupForm;
