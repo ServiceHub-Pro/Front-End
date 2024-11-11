@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Eye, EyeOff, User, Phone, Mail, Lock, UserCog } from 'lucide-react';
+import { Eye, EyeOff, User, Phone, Mail, Lock } from 'lucide-react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import formBgImage from "../../assets/img/architect.jpg";
 
-const SignupForm = () => {
+const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -66,7 +66,7 @@ const SignupForm = () => {
 
   return (
     <div
-      className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8 flex items-center justify-center"
+      className="min-h-screen flex items-center justify-center bg-cover bg-center"
       style={{
         backgroundImage: `url(${formBgImage})`,
         backgroundSize: 'cover',
@@ -85,70 +85,66 @@ const SignupForm = () => {
         pauseOnHover
       />
 
-      <div className="max-w-md w-full space-y-8 bg-white shadow-xl rounded-xl p-8">
-        <div className="space-y-2">
-          <h2 className="text-3xl font-bold text-gray-900 text-center">
-            Create Account
-          </h2>
-          <p className="text-gray-500 text-center text-sm">
-            Join our community and discover amazing services
-          </p>
+      <div className="max-w-md w-full space-y-8 bg-white bg-opacity-90 rounded-xl shadow-xl p-8">
+        <div className="space-y-2 text-center">
+          <h2 className="text-3xl font-bold text-[#5D4037]">Create Account</h2>
+          <p className="text-[#8D6E63] text-sm">Join our community and discover amazing services</p>
         </div>
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
           <div className="space-y-4">
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <User className="h-5 w-5 text-gray-400" />
+                <User className="h-5 w-5 text-[#8D6E63]" />
               </div>
               <input
                 id="name"
                 name="name"
                 type="text"
                 required
-                className="pl-10 block w-full rounded-lg border border-gray-300 py-3 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                className="pl-10 block w-full rounded-lg border border-[#8D6E63] py-3 text-[#5D4037] placeholder-[#8D6E63] focus:ring-2 focus:ring-[#5D4037] focus:border-transparent sm:text-sm bg-white bg-opacity-90"
                 placeholder="Full Name"
               />
             </div>
 
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Phone className="h-5 w-5 text-gray-400" />
+                <Phone className="h-5 w-5 text-[#8D6E63]" />
               </div>
               <input
                 id="contact"
                 name="contact"
                 type="tel"
                 required
-                className="pl-10 block w-full rounded-lg border border-gray-300 py-3 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                className="pl-10 block w-full rounded-lg border border-[#8D6E63] py-3 text-[#5D4037] placeholder-[#8D6E63] focus:ring-2 focus:ring-[#5D4037] focus:border-transparent sm:text-sm bg-white bg-opacity-90"
                 placeholder="Contact Number"
               />
             </div>
 
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Mail className="h-5 w-5 text-gray-400" />
+                <Mail className="h-5 w-5 text-[#8D6E63]" />
               </div>
               <input
                 id="email"
                 name="email"
                 type="email"
                 required
-                className="pl-10 block w-full rounded-lg border border-gray-300 py-3 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                className="pl-10 block w-full rounded-lg border border-[#8D6E63] py-3 text-[#5D4037] placeholder-[#8D6E63] focus:ring-2 focus:ring-[#5D4037] focus:border-transparent sm:text-sm bg-white bg-opacity-90"
                 placeholder="Email Address"
               />
             </div>
 
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Lock className="h-5 w-5 text-gray-400" />
+                <Lock className="h-5 w-5 text-[#8D6E63]" />
               </div>
               <input
                 id="password"
                 name="password"
                 type={showPassword ? 'text' : 'password'}
                 required
-                className="pl-10 block w-full rounded-lg border border-gray-300 py-3 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                className="pl-10 block w-full rounded-lg border border-[#8D6E63] py-3 text-[#5D4037] placeholder-[#8D6E63] focus:ring-2 focus:ring-[#5D4037] focus:border-transparent sm:text-sm bg-white bg-opacity-90"
                 placeholder="Password"
               />
               <button
@@ -157,22 +153,22 @@ const SignupForm = () => {
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? 
-                  <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-500" /> : 
-                  <Eye className="h-5 w-5 text-gray-400 hover:text-gray-500" />
+                  <EyeOff className="h-5 w-5 text-[#5D4037] hover:text-[#8D6E63]" /> : 
+                  <Eye className="h-5 w-5 text-[#5D4037] hover:text-[#8D6E63]" />
                 }
               </button>
             </div>
 
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Lock className="h-5 w-5 text-gray-400" />
+                <Lock className="h-5 w-5 text-[#8D6E63]" />
               </div>
               <input
                 id="confirmPassword"
                 name="confirmPassword"
                 type={showConfirmPassword ? 'text' : 'password'}
                 required
-                className="pl-10 block w-full rounded-lg border border-gray-300 py-3 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                className="pl-10 block w-full rounded-lg border border-[#8D6E63] py-3 text-[#5D4037] placeholder-[#8D6E63] focus:ring-2 focus:ring-[#5D4037] focus:border-transparent sm:text-sm bg-white bg-opacity-90"
                 placeholder="Confirm Password"
               />
               <button
@@ -181,42 +177,32 @@ const SignupForm = () => {
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               >
                 {showConfirmPassword ? 
-                  <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-500" /> : 
-                  <Eye className="h-5 w-5 text-gray-400 hover:text-gray-500" />
+                  <EyeOff className="h-5 w-5 text-[#5D4037] hover:text-[#8D6E63]" /> : 
+                  <Eye className="h-5 w-5 text-[#5D4037] hover:text-[#8D6E63]" />
                 }
               </button>
             </div>
-
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <UserCog className="h-5 w-5 text-gray-400" />
-              </div>
-              <select
-                id="role"
-                name="role"
-                className="pl-10 block w-full rounded-lg border border-gray-300 py-3 text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              >
-                <option value="user">User</option>
-                <option value="serviceProvider">Service Provider</option>
-              </select>
-            </div>
           </div>
 
-          <div>
-            <button
-              type="submit"
-              disabled={loading}
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent rounded-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-400 disabled:cursor-not-allowed transition-colors duration-200"
-            >
-              {loading ? "Creating account..." : "Create Account"}
-            </button>
-          </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full py-2 px-4 rounded-lg text-white font-medium 
+              ${loading 
+                ? 'bg-[#8D6E63] cursor-not-allowed' 
+                : 'bg-[#6D4C41] hover:bg-[#5D4037] active:bg-[#4E342E]'
+              } transition duration-200 focus:outline-none focus:ring-2 focus:ring-[#5D4037] focus:ring-offset-2`}
+          >
+            {loading ? 'Signing up...' : 'Sign Up'}
+          </button>
 
-          <div className="text-sm text-center">
-            <span className="text-gray-500">Already have an account?</span>
-            <Link to="/login" className="text-blue-600 hover:text-blue-800 ml-1">
-              Sign in here
-            </Link>
+          <div className="text-center space-y-2">
+            <p className="text-sm text-[#5D4037]">
+              Already have an account?{' '}
+              <Link to="/login" className="text-[#8D6E63] font-medium hover:underline">
+                Login here
+              </Link>
+            </p>
           </div>
         </form>
       </div>
@@ -224,4 +210,4 @@ const SignupForm = () => {
   );
 };
 
-export default SignupForm;
+export default Signup;
