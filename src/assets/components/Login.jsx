@@ -68,7 +68,7 @@ const Login = () => {
         }
 
         const data = await response.json();
-        localStorage.setItem('token', data.token);
+        localStorage.setItem('token', data.accessToken);
         localStorage.setItem('userRole', data.role); // Store role (e.g., 'user' or 'artisan')
 
         toast.dismiss(); // Dismiss the "Processing login" toast

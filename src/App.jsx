@@ -5,7 +5,7 @@ import ForgottenPassword from './assets/components/ForgottenPassword';
 import Signup from './assets/components/Signup';
 import PageLayout from './assets/layouts/PageLayout';
 import Home from './assets/components/Home';
-import Dashboard from './assets/components/Dashboard';
+import Dashboard from './assets/components/Dashboard/Dashboard';
 import UserPage from './assets/components/UserPage'; // Add a user page
 
 function App() {
