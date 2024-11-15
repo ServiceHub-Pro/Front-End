@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, User, Phone, Mail, Lock } from 'lucide-react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -8,7 +8,6 @@ import formBgImage from "../../assets/img/architect.jpg";
 const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -19,16 +18,9 @@ const Signup = () => {
     const contact = formData.get("contact");
     const email = formData.get("email");
     const password = formData.get("password");
-    const confirmPassword = formData.get("confirmPassword");
-    const role = formData.get("role") || 'user';
+    const role = formData.get("role");
 
-    // Check for password match and show toast before continuing
-    if (password !== confirmPassword) {
-      toast.error("Passwords do not match!");
-      return;
-    }
-
-    // Show success toast before proceeding with async function
+    // Show toast before proceeding with async function
     toast.info("Processing signup...");
     setLoading(true);
 
@@ -93,6 +85,7 @@ const Signup = () => {
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
           <div className="space-y-4">
+            {/* Full Name */}
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <User className="h-5 w-5 text-[#8D6E63]" />
@@ -107,6 +100,7 @@ const Signup = () => {
               />
             </div>
 
+            {/* Contact */}
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Phone className="h-5 w-5 text-[#8D6E63]" />
@@ -121,6 +115,7 @@ const Signup = () => {
               />
             </div>
 
+            {/* Email */}
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Mail className="h-5 w-5 text-[#8D6E63]" />
@@ -135,6 +130,21 @@ const Signup = () => {
               />
             </div>
 
+            {/* Role Selection */}
+            <div className="relative">
+              <select
+                id="role"
+                name="role"
+                required
+                className="block w-full rounded-lg border border-[#8D6E63] py-3 text-[#5D4037] bg-white bg-opacity-90"
+              >
+                <option value="">Select Role</option>
+                <option value="user">User</option>
+                <option value="serviceProvider">Service Provider</option>
+              </select>
+            </div>
+
+            {/* Password */}
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Lock className="h-5 w-5 text-[#8D6E63]" />
@@ -158,30 +168,6 @@ const Signup = () => {
                 }
               </button>
             </div>
-
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Lock className="h-5 w-5 text-[#8D6E63]" />
-              </div>
-              <input
-                id="confirmPassword"
-                name="confirmPassword"
-                type={showConfirmPassword ? 'text' : 'password'}
-                required
-                className="pl-10 block w-full rounded-lg border border-[#8D6E63] py-3 text-[#5D4037] placeholder-[#8D6E63] focus:ring-2 focus:ring-[#5D4037] focus:border-transparent sm:text-sm bg-white bg-opacity-90"
-                placeholder="Confirm Password"
-              />
-              <button
-                type="button"
-                className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              >
-                {showConfirmPassword ? 
-                  <EyeOff className="h-5 w-5 text-[#5D4037] hover:text-[#8D6E63]" /> : 
-                  <Eye className="h-5 w-5 text-[#5D4037] hover:text-[#8D6E63]" />
-                }
-              </button>
-            </div>
           </div>
 
           <button
@@ -189,11 +175,10 @@ const Signup = () => {
             disabled={loading}
             className={`w-full py-2 px-4 rounded-lg text-white font-medium 
               ${loading 
-                ? 'bg-[#8D6E63] cursor-wait' 
-                : 'bg-[#5D4037] hover:bg-[#8D6E63]'}
-            `}
+                ? 'bg-[#5D4037] opacity-70' 
+                : 'bg-[#5D4037] hover:bg-[#8D6E63]'}`}
           >
-            {loading ? 'Please Wait...' : 'Sign Up'}
+            {loading ? "Processing..." : "Sign Up"}
           </button>
         </form>
       </div>

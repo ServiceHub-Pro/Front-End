@@ -43,7 +43,7 @@ const Navbar = () => {
     <nav className="bg-[#6A4E23] text-white py-4">
       <div className="container mx-auto flex justify-between items-center">
         <Link to="/" className="text-2xl font-bold text-white">
-          Artisan Connect
+          Service Hub
         </Link>
 
         <div className="hidden md:flex space-x-8">
@@ -55,7 +55,7 @@ const Navbar = () => {
 
         <div className="flex items-center space-x-6">
           <i className="fas fa-bell text-lg cursor-pointer hover:text-[#D4B18B]" aria-label="Notifications" />
-          
+
           {user ? (
             <div className="flex items-center space-x-4">
               {loading ? (

@@ -41,10 +41,10 @@ const ServiceList = () => {
                 <p className="text-white mt-2 text-sm">{service.description}</p>
                 <div className="mt-6 flex justify-center">
                   <Link
-                    to={`/services/${service.id}`}
+                    to={`/artisan/${service.id}`} // Update the route to point to the artisan's single page
                     className="bg-[#4E342E] hover:bg-[#3E2B2B] text-white font-medium py-2 px-6 rounded-full transition"
                   >
-                    View Service
+                    View Artisan
                   </Link>
                 </div>
               </div>
