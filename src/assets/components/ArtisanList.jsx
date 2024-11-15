@@ -2,40 +2,49 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const ArtisanList = () => {
-  const [artisans, setArtisans] = useState([]);
+const ServiceList = () => {
+  const [services, setServices] = useState([]);
 
   useEffect(() => {
-    fetchArtisans();
+    fetchServices();
   }, []);
 
-  const fetchArtisans = async () => {
+  const fetchServices = async () => {
     try {
-      const response = await axios.get("https://servicehub-api.onrender.com");
-      setArtisans(response.data);
+      const response = await axios.get("https://servicehub-api.onrender.com/services");
+      console.log(response.data);
+      setServices(response.data);
     } catch (error) {
-      console.error("Error fetching artisans:", error);
+      console.error("Error fetching services:", error);
     }
   };
 
   return (
     <div className="mt-8">
-      {artisans.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {artisans.map((artisan) => (
+      {services.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          {services.map((service) => (
             <div
-              key={artisan.id}
-              className="bg-white shadow-md rounded-lg overflow-hidden"
+              key={service.id}
+              className="bg-[#8D6E63] shadow-lg rounded-lg overflow-hidden transition transform hover:scale-105 hover:shadow-2xl"
             >
-              <div className="p-4">
-                <h3 className="text-lg font-medium">{artisan.name}</h3>
-                <p className="text-gray-600">{artisan.description}</p>
-                <div className="mt-4">
+              {/* Image Display */}
+              {service.image && (
+                <img
+                  src={service.image} // Assuming image is a URL or base64 string
+                  alt={service.name}
+                  className="w-full h-48 object-cover"
+                />
+              )}
+              <div className="p-6">
+                <h3 className="text-2xl font-semibold text-white">{service.name}</h3>
+                <p className="text-white mt-2 text-sm">{service.description}</p>
+                <div className="mt-6 flex justify-center">
                   <Link
-                    to={`/artisans/${artisan.id}`}
-                    className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded"
+                    to={`/services/${service.id}`}
+                    className="bg-[#4E342E] hover:bg-[#3E2B2B] text-white font-medium py-2 px-6 rounded-full transition"
                   >
-                    View Artisan
+                    View Service
                   </Link>
                 </div>
               </div>
@@ -43,10 +52,10 @@ const ArtisanList = () => {
           ))}
         </div>
       ) : (
-        <div className="text-gray-500">Loading artisans...</div>
+        <div className="text-center text-gray-500">Loading services...</div>
       )}
     </div>
   );
 };
 
-export default ArtisanList;
+export default ServiceList;

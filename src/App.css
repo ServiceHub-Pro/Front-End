@@ -22,4 +22,6 @@
     position: relative; /* Ensure content sits above the blurred background */
     z-index: 2; /* Place it above the blurred background */
   }
+
+ 
   

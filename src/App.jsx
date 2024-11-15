@@ -6,7 +6,6 @@ import Signup from './assets/components/Signup';
 import PageLayout from './assets/layouts/PageLayout';
 import Home from './assets/components/Home';
 import Dashboard from './assets/components/Dashboard/Dashboard';
-import UserPage from './assets/components/UserPage'; // Add a user page
 
 function App() {
   const router = createBrowserRouter([
@@ -14,38 +13,17 @@ function App() {
       path: '/',
       element: <PageLayout />,
       children: [
-        {
-          index: true,
-          element: <Home />,
-        },
+        { index: true, element: <Home /> },
       ],
     },
+    { path: '/login', element: <Login /> },
+    { path: '/signup', element: <Signup /> },
+    { path: '/forgottenpassword', element: <ForgottenPassword /> },
     {
-      path: '/login',
-      element: <Login />,
-    },
-    {
-      path: '/signup',
-      element: <Signup />,
-    },
-    {
-      path: '/forgottenpassword',
-      element: <ForgottenPassword />,
-    },
-    {
-      path: '/dashboard',
+      path: '/dashboard/*',  // Allows nested routing in Dashboard
       element: <Dashboard />,
     },
-    {
-      path: '/user',
-      element: <PageLayout />,
-      children: [
-        {
-          index: true, // This defines the default route for /user
-          element: <UserPage />,
-        },
-      ],
-    },
+ 
   ]);
 
   return <RouterProvider router={router} />;

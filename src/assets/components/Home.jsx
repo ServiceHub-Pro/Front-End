@@ -15,7 +15,7 @@ const Home = () => {
       {/* Search Section */}
       <div className="relative w-full max-w-3xl p-6 bg-[#8D6E63] rounded-lg shadow-lg mt-8">
         <div className="flex items-center space-x-4">
-          <Search className="text-white text-xl" />
+          <Search id='search' className="text-white text-xl" />
           <input
             type="text"
             placeholder="Search for Artisan"

@@ -23,7 +23,7 @@ const Search = ({ onSearch, placeholder = "Search for artisans, crafts, or servi
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
+    <div id="search" className="w-full max-w-2xl mx-auto">
       <form onSubmit={handleSearch} className="relative group">
         {/* Main Search Container */}
         <div

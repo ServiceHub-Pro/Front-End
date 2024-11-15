@@ -75,10 +75,10 @@ const Login = () => {
         toast.success("Login successful!");
 
         // Navigate based on role
-        if (data.role === 'artisan') {
+        if (data.role === 'provider') {
           navigate('/dashboard'); // Redirect artisan to dashboard
         } else {
-          navigate('/user'); // Redirect regular user to user page
+          navigate('/'); // Redirect regular user to user page
         }
 
       } catch (error) {

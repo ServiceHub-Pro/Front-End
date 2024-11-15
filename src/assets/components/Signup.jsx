@@ -189,21 +189,12 @@ const Signup = () => {
             disabled={loading}
             className={`w-full py-2 px-4 rounded-lg text-white font-medium 
               ${loading 
-                ? 'bg-[#8D6E63] cursor-not-allowed' 
-                : 'bg-[#6D4C41] hover:bg-[#5D4037] active:bg-[#4E342E]'
-              } transition duration-200 focus:outline-none focus:ring-2 focus:ring-[#5D4037] focus:ring-offset-2`}
+                ? 'bg-[#8D6E63] cursor-wait' 
+                : 'bg-[#5D4037] hover:bg-[#8D6E63]'}
+            `}
           >
-            {loading ? 'Signing up...' : 'Sign Up'}
+            {loading ? 'Please Wait...' : 'Sign Up'}
           </button>
-
-          <div className="text-center space-y-2">
-            <p className="text-sm text-[#5D4037]">
-              Already have an account?{' '}
-              <Link to="/login" className="text-[#8D6E63] font-medium hover:underline">
-                Login here
-              </Link>
-            </p>
-          </div>
         </form>
       </div>
     </div>
