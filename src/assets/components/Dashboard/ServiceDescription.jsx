@@ -90,12 +90,7 @@ const ServiceDescription = () => {
   };
 
   return (
-    <div
-      className="min-h-screen bg-cover bg-center py-10 px-4"
-      style={{
-        backgroundImage: `url(/images/vintage.jpg)`,
-      }}
-    >
+    <div className="min-h-screen bg-cover bg-center py-10 px-4" style={{ backgroundImage: `url(/images/vintage.jpg)` }}>
       <div className="bg-black bg-opacity-50 min-h-screen py-10 px-4">
         <ToastContainer />
         <div className="max-w-2xl mx-auto">
@@ -104,15 +99,15 @@ const ServiceDescription = () => {
           {/* Display Services */}
           <div className="space-y-4 mb-10">
             {services.map((service) => (
-              <div key={service.id} className="bg-white p-4 rounded shadow flex justify-between items-center">
+              <div key={service.id} className="bg-[#8D6E63] text-white p-4 rounded shadow-lg">
                 <div>
-                  <h3 className="text-lg font-semibold text-[#4E342E]">{service.name}</h3>
+                  <h3 className="text-lg font-semibold">{service.name}</h3>
                   <p>{service.description}</p>
                   <p><strong>Price:</strong> ${service.price}</p>
                   <p><strong>Category:</strong> {service.category}</p>
                 </div>
-                <div className="space-x-2">
-                  <button onClick={() => handleEdit(service.id)} className="bg-[#8D6E63] text-white py-1 px-3 rounded">Edit</button>
+                <div className="mt-4 space-x-2">
+                  <button onClick={() => handleEdit(service.id)} className="bg-[#6D4C41] text-white py-1 px-3 rounded">Edit</button>
                   <button onClick={() => handleDelete(service.id)} className="bg-[#D32F2F] text-white py-1 px-3 rounded">Delete</button>
                 </div>
               </div>
