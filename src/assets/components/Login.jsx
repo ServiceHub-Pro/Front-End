@@ -49,7 +49,7 @@ const Login = () => {
       setIsLoading(true);
       toast.info("Processing login...");
       setApiError(null);
-
+  
       try {
         const response = await fetch(`${import.meta.env.VITE_BASE_URL}/users/login`, {
           method: 'POST',
@@ -61,26 +61,32 @@ const Login = () => {
             password: formData.password,
           }),
         });
-
+  
         if (!response.ok) {
           const errorData = await response.json();
           throw new Error(errorData.message || 'Login failed');
         }
-
+  
         const data = await response.json();
+        console.log('Login response:', data); // Debugging: check role and other response details
+  
         localStorage.setItem('token', data.accessToken);
-        localStorage.setItem('userRole', data.role); // Store role (e.g., 'user' or 'artisan')
-
+        localStorage.setItem('userRole', data.role); // Store role (e.g., 'provider' or 'user')
+  
         toast.dismiss(); // Dismiss the "Processing login" toast
         toast.success("Login successful!");
-
-        // Navigate based on role
-        if (data.role === 'provider') {
-          navigate('/dashboard'); // Redirect artisan to dashboard
-        } else {
-          navigate('/'); // Redirect regular user to user page
-        }
-
+  
+        // Delay navigation to show success toast
+        setTimeout(() => {
+          if (data.role === 'provider') {
+            navigate('/dashboard'); // Redirect artisan to dashboard
+          } else if (data.role === 'user') {
+            navigate('/'); // Redirect regular user to user page
+          } else {
+            console.error("Unknown role received:", data.role); // Debugging
+            toast.error("Unknown user role. Please contact support.");
+          }
+        }, 2000); // 3-second delay for toast message
       } catch (error) {
         toast.dismiss();
         setApiError(error.message);
@@ -90,6 +96,7 @@ const Login = () => {
       }
     }
   };
+  
 
   return (
     <div 
