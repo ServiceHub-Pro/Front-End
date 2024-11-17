@@ -42,7 +42,7 @@ const Signup = () => {
           throw new Error(data.message || 'Signup failed');
         }
         toast.success("Sign Up Successful!");
-        setTimeout(() => navigate(role === 'serviceProvider' ? '/dashboard' : '/login'), 2000);
+        setTimeout(() => navigate(role === 'provider' ? '/dashboard' : '/login'), 2000);
       } else {
         const textResponse = await response.text();
         console.error('Received non-JSON response:', textResponse);
@@ -140,7 +140,7 @@ const Signup = () => {
               >
                 <option value="">Select Role</option>
                 <option value="user">User</option>
-                <option value="serviceProvider">Service Provider</option>
+                <option value="provider">Service Provider</option>
               </select>
             </div>
 
