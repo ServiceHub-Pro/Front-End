@@ -7,15 +7,20 @@ const ServiceDescription = () => {
   const [formData, setFormData] = useState({ name: "", description: "", price: "", category: "" });
 
   const fetchServices = async () => {
-    const userId = localStorage.getItem("userId"); // Ensure userId is retrieved securely
-    if (!userId) {
-      toast.error("User ID not found. Please log in again.");
+    const token = localStorage.getItem("Token"); // Ensure the token is stored securely
+    if (!token) {
+      toast.error("Authentication token not found. Please log in again.");
       return;
     }
 
-    toast.info("Loading user-specific services...");
+    toast.info("Loading your services...");
     try {
-      const response = await fetch(`https://servicehub-api.onrender.com/services?userId=${userId}`);
+      const response = await fetch("https://servicehub-api.onrender.com/users/me/services", {
+        headers: {
+          Authorization: `Bearer ${token}`, // Send the token in the Authorization header
+        },
+      });
+
       if (response.ok) {
         const data = await response.json();
         setServices(data);
@@ -39,13 +44,23 @@ const ServiceDescription = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem("Token");
+    if (!token) {
+      toast.error("Authentication token not found. Please log in again.");
+      return;
+    }
+
     toast.info("Adding service...");
     try {
       const response = await fetch("https://servicehub-api.onrender.com/services", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(formData),
       });
+
       if (response.ok) {
         fetchServices();
         setFormData({ name: "", description: "", price: "", category: "" });
@@ -60,9 +75,21 @@ const ServiceDescription = () => {
   };
 
   const handleDelete = async (serviceId) => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      toast.error("Authentication token not found. Please log in again.");
+      return;
+    }
+
     toast.info("Deleting service...");
     try {
-      const response = await fetch(`http://localhost:3200/services/${serviceId}`, { method: "DELETE" });
+      const response = await fetch(`http://localhost:3200/services/${serviceId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       if (response.ok) {
         fetchServices();
         toast.success("Service deleted successfully!");
@@ -126,6 +153,27 @@ const ServiceDescription = () => {
               Add Service
             </button>
           </form>
+
+          <div className="mt-6">
+            <h3 className="text-xl text-white font-semibold mb-4">Your Services</h3>
+            <ul>
+              {services.map((service) => (
+                <li key={service.id} className="bg-white p-4 rounded shadow mb-4 flex justify-between">
+                  <div>
+                    <h4 className="font-bold text-lg">{service.name}</h4>
+                    <p>{service.description}</p>
+                    <p className="text-gray-500">${service.price}</p>
+                  </div>
+                  <button
+                    onClick={() => handleDelete(service.id)}
+                    className="bg-red-500 text-white px-4 py-2 rounded"
+                  >
+                    Delete
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </div>

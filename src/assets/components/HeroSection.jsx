@@ -60,12 +60,12 @@ const HeroSection = () => {
           >
             Become an Artisan
           </Link>
-          <a
-            href="search"
+          <Link
+            to="/search"
             className="inline-block px-8 py-3 bg-transparent border-2 border-white text-white text-lg font-semibold rounded-lg hover:bg-white hover:text-[#5D4037] transition duration-300"
           >
             Find an Artisan Near You
-          </a>
+          </Link>
         </div>
       </div>
     </div>

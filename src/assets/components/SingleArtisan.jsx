@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const ServiceList = () => {
+const ArtisanList = () => {
   const [services, setServices] = useState([]);
-  const userId = localStorage.getItem("userId"); // Retrieve userId from storage or context
+  const userId = localStorage.getItem("Id"); // Retrieve userId from storage or context
 
   useEffect(() => {
     if (userId) fetchUserServices();
@@ -12,7 +12,7 @@ const ServiceList = () => {
 
   const fetchUserServices = async () => {
     try {
-      const response = await axios.get(`https://servicehub-api.onrender.com/services?userId=${userId}`);
+      const response = await axios.get(`https://servicehub-api.onrender.com/services?Id=${Id}`);
       setServices(response.data);
     } catch (error) {
       console.error("Error fetching user-specific services:", error);
@@ -57,4 +57,4 @@ const ServiceList = () => {
   );
 };
 
-export default ServiceList;
+export default ArtisanList;

@@ -1,15 +1,12 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { Eye, EyeOff } from 'lucide-react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import formBgImage from "../../assets/img/architect.jpg";
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -19,9 +16,9 @@ const Login = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: null }));
+      setErrors((prev) => ({ ...prev, [name]: null }));
     }
   };
 
@@ -29,14 +26,14 @@ const Login = () => {
     const newErrors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!formData.email) {
-      newErrors.email = 'Email is required';
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
     } else if (!emailRegex.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
+      newErrors.email = "Please enter a valid email address";
     }
 
-    if (!formData.password) {
-      newErrors.password = 'Password is required';
+    if (!formData.password.trim()) {
+      newErrors.password = "Password is required";
     }
 
     setErrors(newErrors);
@@ -45,70 +42,58 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (validate()) {
-      setIsLoading(true);
-      toast.info("Processing login...");
-      setApiError(null);
-  
-      try {
-        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/users/login`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: formData.email,
-            password: formData.password,
-          }),
-        });
-  
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || 'Login failed');
-        }
-  
-        const data = await response.json();
-        console.log('Login response:', data); // Debugging: check role and other response details
-  
-        localStorage.setItem('token', data.accessToken);
-        localStorage.setItem('userRole', data.role); // Store role (e.g., 'provider' or 'user')
-  
-        toast.dismiss(); // Dismiss the "Processing login" toast
-        toast.success("Login successful!");
-  
-        // Delay navigation to show success toast
-        setTimeout(() => {
-          if (data.role === 'provider') {
-            navigate('/dashboard'); // Redirect artisan to dashboard
-          } else if (data.role === 'user') {
-            navigate('/'); // Redirect regular user to user page
-          } else {
-            console.error("Unknown role received:", data.role); // Debugging
-            toast.error("Unknown user role. Please contact support.");
-          }
-        }, 2000); // 3-second delay for toast message
-      } catch (error) {
-        toast.dismiss();
-        setApiError(error.message);
-        toast.error(error.message || "Login failed");
-      } finally {
-        setIsLoading(false);
+    if (!validate()) return;
+
+    setIsLoading(true);
+    toast.info("Processing login...");
+    setApiError(null);
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/users/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Login failed");
       }
+
+      const data = await response.json();
+      console.log("Login response:", data); // Debugging: check role and other response details
+
+      localStorage.setItem("token", data.accessToken);
+      localStorage.setItem("userRole", data.role);
+
+      toast.dismiss();
+      toast.success("Login successful!");
+
+      setTimeout(() => {
+        navigate(data.role === "provider" ? "/dashboard" : "/");
+      }, 2000);
+    } catch (error) {
+      toast.dismiss();
+      setApiError(error.message);
+      toast.error(error.message || "Login failed");
+    } finally {
+      setIsLoading(false);
     }
   };
-  
 
   return (
-    <div 
+    <div
       className="min-h-screen flex items-center justify-center bg-cover bg-center"
       style={{
         backgroundImage: `url(${formBgImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
     >
       <ToastContainer position="top-center" autoClose={3000} hideProgressBar />
-      
+
       <div className="w-full max-w-md bg-white bg-opacity-90 rounded-lg shadow-lg p-8">
         <div className="mb-8 text-center">
           <h2 className="text-2xl font-bold text-[#5D4037]">Welcome Back</h2>
@@ -122,6 +107,7 @@ const Login = () => {
             </div>
           )}
 
+          {/* Email Input */}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-[#6D4C41] mb-1">
               Email
@@ -134,16 +120,13 @@ const Login = () => {
               onChange={handleChange}
               aria-invalid={errors.email ? "true" : "false"}
               aria-describedby="email-error"
-              className="w-full px-4 py-3 rounded-lg border border-[#8D6E63] 
-                focus:outline-none focus:ring-2 focus:ring-[#5D4037] focus:border-transparent 
-                transition duration-200 bg-white bg-opacity-90"
+              className="w-full px-4 py-3 rounded-lg border border-[#8D6E63] focus:outline-none focus:ring-2 focus:ring-[#5D4037] focus:border-transparent transition duration-200 bg-white bg-opacity-90"
               placeholder="you@example.com"
             />
-            {errors.email && (
-              <p id="email-error" className="mt-1 text-sm text-red-500">{errors.email}</p>
-            )}
+            {errors.email && <p id="email-error" className="mt-1 text-sm text-red-500">{errors.email}</p>}
           </div>
 
+          {/* Password Input */}
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-[#6D4C41] mb-1">
               Password
@@ -152,14 +135,12 @@ const Login = () => {
               <input
                 id="password"
                 name="password"
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 value={formData.password}
                 onChange={handleChange}
                 aria-invalid={errors.password ? "true" : "false"}
                 aria-describedby="password-error"
-                className="w-full px-4 py-3 rounded-lg border border-[#8D6E63]
-                  focus:outline-none focus:ring-2 focus:ring-[#5D4037] focus:border-transparent
-                  transition duration-200 bg-white bg-opacity-90"
+                className="w-full px-4 py-3 rounded-lg border border-[#8D6E63] focus:outline-none focus:ring-2 focus:ring-[#5D4037] focus:border-transparent transition duration-200 bg-white bg-opacity-90"
               />
               <button
                 type="button"
@@ -170,34 +151,29 @@ const Login = () => {
                 {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
-            {errors.password && (
-              <p id="password-error" className="mt-1 text-sm text-red-500">{errors.password}</p>
-            )}
+            {errors.password && <p id="password-error" className="mt-1 text-sm text-red-500">{errors.password}</p>}
             <div className="flex justify-end mt-1">
-              <Link 
-                to="/forgottenpassword" 
-                className="text-sm text-[#8D6E63] hover:text-[#5D4037]"
-              >
+              <Link to="/forgottenpassword" className="text-sm text-[#8D6E63] hover:text-[#5D4037]">
                 Forgot Password?
               </Link>
             </div>
           </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
             disabled={isLoading}
-            className={`w-full py-2 px-4 rounded-lg text-white font-medium 
-              ${isLoading 
-                ? 'bg-[#8D6E63] cursor-not-allowed' 
-                : 'bg-[#6D4C41] hover:bg-[#5D4037] active:bg-[#4E342E]'
-              } transition duration-200 focus:outline-none focus:ring-2 focus:ring-[#5D4037] focus:ring-offset-2`}
+            className={`w-full py-2 px-4 rounded-lg text-white font-medium ${
+              isLoading ? "bg-[#8D6E63] cursor-not-allowed" : "bg-[#6D4C41] hover:bg-[#5D4037] active:bg-[#4E342E]"
+            } transition duration-200 focus:outline-none focus:ring-2 focus:ring-[#5D4037] focus:ring-offset-2`}
           >
-            {isLoading ? 'Logging in...' : 'Log In'}
+            {isLoading ? "Logging in..." : "Log In"}
           </button>
 
+          {/* Signup Redirect */}
           <div className="text-center space-y-2">
             <p className="text-sm text-[#6D4C41]">
-              Don't have an account?{' '}
+              Don't have an account?{" "}
               <Link to="/signup" className="font-medium text-[#8D6E63] hover:text-[#5D4037]">
                 Sign up
               </Link>
