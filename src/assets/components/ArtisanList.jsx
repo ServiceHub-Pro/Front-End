@@ -12,8 +12,13 @@ const ServiceList = () => {
   const fetchServices = async () => {
     try {
       const response = await axios.get("https://servicehub-api.onrender.com/services");
-      console.log(response.data);
-      setServices(response.data);
+      const servicesWithImages = response.data.map((service) => ({
+        ...service,
+        image: service.image
+          ? `https://savefiles.org/drive/folders/MjEzNjN8cGFkZA/${service.image}`
+          : null, // Assuming service.image contains a relative path
+      }));
+      setServices(servicesWithImages);
     } catch (error) {
       console.error("Error fetching services:", error);
     }
@@ -29,19 +34,23 @@ const ServiceList = () => {
               className="bg-[#8D6E63] shadow-lg rounded-lg overflow-hidden transition transform hover:scale-105 hover:shadow-2xl"
             >
               {/* Image Display */}
-              {service.image && (
+              {service.image ? (
                 <img
-                  src={service.image} // Assuming image is a URL or base64 string
-                  alt={service.name}
+                  src={service.image}
+                  alt={service.title}
                   className="w-full h-48 object-cover"
                 />
+              ) : (
+                <div className="w-full h-48 bg-gray-300 flex items-center justify-center text-gray-500">
+                  No Image Available
+                </div>
               )}
               <div className="p-6">
-                <h3 className="text-2xl font-semibold text-white">{service.name}</h3>
+                <h3 className="text-2xl font-semibold text-white">{service.title}</h3>
                 <p className="text-white mt-2 text-sm">{service.description}</p>
                 <div className="mt-6 flex justify-center">
                   <Link
-                    to={`/artisan/${service.id}`} // Update the route to point to the artisan's single page
+                    to={`/artisan/${service.id}`}
                     className="bg-[#4E342E] hover:bg-[#3E2B2B] text-white font-medium py-2 px-6 rounded-full transition"
                   >
                     View Artisan

@@ -1,133 +1,103 @@
-import React, { useState } from 'react';
-import { Search, X, Loader2 } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import Search from "./Search";
 
-const Search = ({ onSearch, placeholder = "Search for artisans, crafts, or services..." }) => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isFocused, setIsFocused] = useState(false);
+const ServiceList = () => {
+  const [services, setServices] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    if (!searchQuery.trim()) return;
-    
+  useEffect(() => {
+    fetchServices();
+  }, []);
+
+  const fetchServices = async () => {
+    try {
+      const response = await axios.get("https://servicehub-api.onrender.com/services");
+      const servicesWithImages = response.data.map((service) => ({
+        ...service,
+        image: service.image
+          ? `https://savefiles.org/drive/folders/MjEzNjN8cGFkZA/${service.image}`
+          : null,
+      }));
+      setServices(servicesWithImages);
+    } catch (error) {
+      console.error("Error fetching services:", error);
+    }
+  };
+
+  const handleSearch = async (query) => {
     setIsLoading(true);
     try {
-      await onSearch(searchQuery);
+      const response = await axios.get(`https://servicehub-api.onrender.com/services/${query}`);
+      const service = response.data;
+      setServices(
+        service
+          ? [
+              {
+                ...service,
+                image: service.image
+                  ? `https://savefiles.org/drive/folders/MjEzNjN8cGFkZA/${service.image}`
+                  : null,
+              },
+            ]
+          : []
+      );
+    } catch (error) {
+      console.error("Error searching for services:", error);
+      setServices([]); // Clear the list if search fails
     } finally {
       setIsLoading(false);
     }
   };
 
-  const clearSearch = () => {
-    setSearchQuery('');
-  };
-
   return (
-    <div id="search" className="w-full max-w-2xl mx-auto">
-      <form onSubmit={handleSearch} className="relative group">
-        {/* Main Search Container */}
-        <div
-          className={`
-            relative flex items-center transition-all duration-300
-            ${isFocused 
-              ? 'shadow-lg transform -translate-y-0.5' 
-              : 'shadow-md hover:shadow-lg'
-            }
-            bg-white rounded-xl overflow-hidden
-            border-2 border-[#8B5E3C] focus-within:border-[#6B4423]
-          `}
-        >
-          {/* Search Icon */}
-          <div className="pl-4">
-            <Search 
-              className={`
-                w-5 h-5 transition-colors duration-300
-                ${isFocused ? 'text-[#6B4423]' : 'text-[#8B5E3C]'}
-              `}
-            />
-          </div>
+    <div className="mt-8">
+      {/* Search Component */}
+      <Search onSearch={handleSearch} placeholder="Search for artisans, crafts, or services..." />
 
-          {/* Search Input */}
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
-            placeholder={placeholder}
-            className={`
-              w-full py-4 px-3 text-lg
-              bg-transparent outline-none
-              text-[#4A3526] placeholder-[#B08968]
-              transition-all duration-300
-            `}
-          />
-
-          {/* Clear and Loading Icons */}
-          <div className="pr-4 flex items-center space-x-2">
-            {searchQuery && !isLoading && (
-              <button
-                type="button"
-                onClick={clearSearch}
-                className="p-1 hover:bg-[#F5EDE7] rounded-full transition-colors duration-200"
-              >
-                <X className="w-4 h-4 text-[#8B5E3C]" />
-              </button>
-            )}
-            {isLoading && (
-              <Loader2 className="w-5 h-5 text-[#8B5E3C] animate-spin" />
-            )}
-          </div>
-        </div>
-
-        {/* Search Suggestions Container - can be expanded for autocomplete */}
-        {isFocused && searchQuery && (
-          <div className="
-            absolute w-full mt-2 py-2 
-            bg-white rounded-lg shadow-lg 
-            border border-[#E6D5C7]
-            z-10
-          ">
-            {/* Example suggestion items */}
-            <div className="py-2 px-4 hover:bg-[#F5EDE7] cursor-pointer text-[#4A3526]">
-              Search "{searchQuery}"
+      {/* Services List */}
+      {isLoading ? (
+        <div className="text-center text-gray-500 mt-4">Loading...</div>
+      ) : services.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-6">
+          {services.map((service) => (
+            <div
+              key={service.id}
+              className="bg-[#8D6E63] shadow-lg rounded-lg overflow-hidden transition transform hover:scale-105 hover:shadow-2xl"
+            >
+              {/* Image Display */}
+              {service.image ? (
+                <img
+                  src={service.image}
+                  alt={service.title}
+                  className="w-full h-48 object-cover"
+                />
+              ) : (
+                <div className="w-full h-48 bg-gray-300 flex items-center justify-center text-gray-500">
+                  No Image Available
+                </div>
+              )}
+              <div className="p-6">
+                <h3 className="text-2xl font-semibold text-white">{service.title}</h3>
+                <p className="text-white mt-2 text-sm">{service.description}</p>
+                <div className="mt-6 flex justify-center">
+                  <Link
+                    to={`/artisan/${service.id}`}
+                    className="bg-[#4E342E] hover:bg-[#3E2B2B] text-white font-medium py-2 px-6 rounded-full transition"
+                  >
+                    View Artisan
+                  </Link>
+                </div>
+              </div>
             </div>
-          </div>
-        )}
-      </form>
-
-      {/* Optional Search Tags */}
-      <div className="flex flex-wrap gap-2 mt-3">
-        <button 
-          className="
-            px-3 py-1 text-sm
-            rounded-full bg-[#F5EDE7] text-[#6B4423]
-            hover:bg-[#E6D5C7] transition-colors duration-200
-          "
-        >
-          Popular
-        </button>
-        <button 
-          className="
-            px-3 py-1 text-sm
-            rounded-full bg-[#F5EDE7] text-[#6B4423]
-            hover:bg-[#E6D5C7] transition-colors duration-200
-          "
-        >
-          Nearby
-        </button>
-        <button 
-          className="
-            px-3 py-1 text-sm
-            rounded-full bg-[#F5EDE7] text-[#6B4423]
-            hover:bg-[#E6D5C7] transition-colors duration-200
-          "
-        >
-          Featured
-        </button>
-      </div>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center text-gray-500 mt-4">No services found.</div>
+      )}
     </div>
   );
 };
 
-export default Search;
+export default ServiceList;

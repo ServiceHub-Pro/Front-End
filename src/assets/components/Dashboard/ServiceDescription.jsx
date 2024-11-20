@@ -4,10 +4,17 @@ import "react-toastify/dist/ReactToastify.css";
 
 const ServiceDescription = () => {
   const [services, setServices] = useState([]);
-  const [formData, setFormData] = useState({ name: "", description: "", price: "", category: "" });
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    price: "",
+    category: "",
+    location: "",
+    image: null, // File upload
+  });
 
   const fetchServices = async () => {
-    const token = localStorage.getItem("Token"); // Ensure the token is stored securely
+    const token = localStorage.getItem("Token");
     if (!token) {
       toast.error("Authentication token not found. Please log in again.");
       return;
@@ -17,7 +24,7 @@ const ServiceDescription = () => {
     try {
       const response = await fetch("https://servicehub-api.onrender.com/users/me/services", {
         headers: {
-          Authorization: `Bearer ${token}`, // Send the token in the Authorization header
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -39,7 +46,12 @@ const ServiceDescription = () => {
   }, []);
 
   const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleFileChange = (e) => {
+    setFormData({ ...formData, image: e.target.files[0] });
   };
 
   const handleSubmit = async (e) => {
@@ -50,20 +62,31 @@ const ServiceDescription = () => {
       return;
     }
 
+    const serviceData = new FormData();
+    Object.keys(formData).forEach((key) => {
+      serviceData.append(key, formData[key]);
+    });
+
     toast.info("Adding service...");
     try {
       const response = await fetch("https://servicehub-api.onrender.com/services", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(formData),
+        body: serviceData,
       });
 
       if (response.ok) {
         fetchServices();
-        setFormData({ name: "", description: "", price: "", category: "" });
+        setFormData({
+          title: "",
+          description: "",
+          price: "",
+          category: "",
+          location: "",
+          image: null,
+        });
         toast.success("Service added successfully!");
       } else {
         toast.error("Failed to add service.");
@@ -75,7 +98,7 @@ const ServiceDescription = () => {
   };
 
   const handleDelete = async (serviceId) => {
-    const token = localStorage.getItem("authToken");
+    const token = localStorage.getItem("Token");
     if (!token) {
       toast.error("Authentication token not found. Please log in again.");
       return;
@@ -111,11 +134,11 @@ const ServiceDescription = () => {
           <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-lg space-y-4">
             <h3 className="text-xl text-[#6D4C41] font-semibold mb-4">Add a New Service</h3>
             <div>
-              <label className="block text-gray-700">Service Name</label>
+              <label className="block text-gray-700">Service Title</label>
               <input
                 type="text"
-                name="name"
-                value={formData.name}
+                name="title"
+                value={formData.title}
                 onChange={handleInputChange}
                 className="w-full p-2 border rounded text-black"
               />
@@ -132,7 +155,7 @@ const ServiceDescription = () => {
             <div>
               <label className="block text-gray-700">Price</label>
               <input
-                type="text"
+                type="number"
                 name="price"
                 value={formData.price}
                 onChange={handleInputChange}
@@ -149,6 +172,25 @@ const ServiceDescription = () => {
                 className="w-full p-2 border rounded text-black"
               />
             </div>
+            <div>
+              <label className="block text-gray-700">Location</label>
+              <input
+                type="text"
+                name="location"
+                value={formData.location}
+                onChange={handleInputChange}
+                className="w-full p-2 border rounded text-black"
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700">Image</label>
+              <input
+                type="file"
+                name="image"
+                onChange={handleFileChange}
+                className="w-full p-2 border rounded text-black"
+              />
+            </div>
             <button type="submit" className="w-full bg-[#6D4C41] text-white py-2 rounded">
               Add Service
             </button>
@@ -160,7 +202,7 @@ const ServiceDescription = () => {
               {services.map((service) => (
                 <li key={service.id} className="bg-white p-4 rounded shadow mb-4 flex justify-between">
                   <div>
-                    <h4 className="font-bold text-lg">{service.name}</h4>
+                    <h4 className="font-bold text-lg">{service.title}</h4>
                     <p>{service.description}</p>
                     <p className="text-gray-500">${service.price}</p>
                   </div>
