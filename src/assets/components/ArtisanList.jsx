@@ -15,10 +15,10 @@ const ServiceList = () => {
       const servicesWithImages = response.data.map((service) => ({
         ...service,
         image: service.image
-          ? `https://savefiles.org/drive/folders/MjEzNjN8cGFkZA/${service.image}`
+          ? `https://savefiles.org/drive/s/Oaa0SrcXTB7CPHsSooD6vO0ERKcWgw/${service.image}`
           : null, // Assuming service.image contains a relative path
       }));
-      setServices(servicesWithImages);
+      setServices(servicesWithImages.slice(0, 9)); // Limit to 9 services
     } catch (error) {
       console.error("Error fetching services:", error);
     }
@@ -31,7 +31,7 @@ const ServiceList = () => {
           {services.map((service) => (
             <div
               key={service.id}
-              className="bg-[#8D6E63] shadow-lg rounded-lg overflow-hidden transition transform hover:scale-105 hover:shadow-2xl"
+              className="bg-[#8D6E63] shadow-lg rounded-lg overflow-hidden flex flex-col transition transform hover:scale-105 hover:shadow-2xl"
             >
               {/* Image Display */}
               {service.image ? (
@@ -45,10 +45,16 @@ const ServiceList = () => {
                   No Image Available
                 </div>
               )}
-              <div className="p-6">
-                <h3 className="text-2xl font-semibold text-white">{service.title}</h3>
-                <p className="text-white mt-2 text-sm">{service.description}</p>
-                <div className="mt-6 flex justify-center">
+
+              {/* Content */}
+              <div className="flex flex-col justify-between flex-1 p-6">
+                <div>
+                  <h3 className="text-2xl font-semibold text-white">{service.title}</h3>
+                  <p className="text-white mt-2 text-sm line-clamp-3">
+                    {service.description}
+                  </p>
+                </div>
+                <div className="mt-6 flex justify-end">
                   <Link
                     to={`/artisan/${service.id}`}
                     className="bg-[#4E342E] hover:bg-[#3E2B2B] text-white font-medium py-2 px-6 rounded-full transition"

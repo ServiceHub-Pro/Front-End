@@ -1,16 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import ArtisanList from '../components/ArtisanList';
-import HeroSection from './HeroSection';
 import { Search } from 'lucide-react';
+import HeroSection from './HeroSection';
+import ArtisanList from '../components/ArtisanList';
 import AboutUs from './AboutUs';
+import Contact from './Contact';
 
 const Home = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen space-y-4 bg-[#F4E1D2]">
+    <div className="flex flex-col items-center justify-center min-h-screen space-y-6 bg-[#F4E1D2]">
       {/* Hero Section */}
       <HeroSection />
-      <br />
 
       {/* Search Section */}
       <div className="relative w-full max-w-xl p-4 bg-[#8D6E63] rounded-md shadow-md mt-6">
@@ -33,8 +32,13 @@ const Home = () => {
       </div>
 
       {/* About Us Section */}
-      <div className="w-full max-w-4xl">
+      <div className="w-full">
         <AboutUs />
+      </div>
+
+      {/* Contact Section */}
+      <div className="w-full">
+        <Contact />
       </div>
     </div>
   );

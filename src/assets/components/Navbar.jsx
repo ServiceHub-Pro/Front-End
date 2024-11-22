@@ -9,12 +9,12 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) {
+    if (user?.token) {
       setLoading(true);
-      fetch('https://servicehub-api.onrender.com/user-profile', {
+      fetch('https://servicehub-api.onrender.com/users/me', {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${user.token}`,
+          Authorization: `Bearer ${user.token}`,
         },
       })
         .then((response) => response.json())
@@ -26,16 +26,12 @@ const Navbar = () => {
           console.error('Error fetching user profile:', error);
           setLoading(false);
         });
-    } else {
-      setLoading(false);
     }
   }, [user]);
 
   const handleLogout = () => {
     setUser(null);
-    localStorage.removeItem('token');
-    localStorage.removeItem('name');
-    localStorage.removeItem('email');
+    localStorage.clear();
     navigate('/login');
   };
 
@@ -45,32 +41,40 @@ const Navbar = () => {
         <Link to="/" className="text-2xl font-bold text-white">
           Service Hub
         </Link>
-
         <div className="hidden md:flex space-x-8">
-          <Link to="/" className="hover:text-[#D4B18B] transition">Home</Link>
-          <Link to="/services" className="hover:text-[#D4B18B] transition">Services</Link>
-          <Link to="/about" className="hover:text-[#D4B18B] transition">About</Link>
-          <Link to="/contact" className="hover:text-[#D4B18B] transition">Contact</Link>
+          <Link to="/" className="hover:text-[#D4B18B] transition">
+            Home
+          </Link>
+          <Link to="/services" className="hover:text-[#D4B18B] transition">
+            Services
+          </Link>
+          <Link to="/about" className="hover:text-[#D4B18B] transition">
+            About
+          </Link>
+          <Link to="/contact" className="hover:text-[#D4B18B] transition">
+            Contact
+          </Link>
         </div>
-
         <div className="flex items-center space-x-6">
-          <i className="fas fa-bell text-lg cursor-pointer hover:text-[#D4B18B]" aria-label="Notifications" />
-
+          <i
+            className="fas fa-bell text-lg cursor-pointer hover:text-[#D4B18B]"
+            aria-label="Notifications"
+          />
           {user ? (
             <div className="flex items-center space-x-4">
               {loading ? (
                 <span className="text-sm font-semibold">Loading...</span>
               ) : (
                 <>
-                  <span className="text-sm font-semibold">{userProfile ? userProfile.name : user.name}</span>
-                  <span className="text-sm text-gray-300">{userProfile ? userProfile.email : user.email}</span>
-                  <Link to="/profile" className="hover:text-[#D4B18B]" aria-label="User profile">
+                  <span className="text-sm font-semibold">
+                    {userProfile?.name || user.name}
+                  </span>
+                  <Link to="/profile" className="hover:text-[#D4B18B]">
                     <i className="fas fa-user-circle text-2xl" />
                   </Link>
-                  <button 
-                    onClick={handleLogout} 
-                    className="text-sm text-[#D4B18B] hover:text-[#D4B18B] transition duration-300"
-                    aria-label="Logout"
+                  <button
+                    onClick={handleLogout}
+                    className="text-sm text-[#D4B18B] hover:text-[#D4B18B]"
                   >
                     Logout
                   </button>
@@ -81,15 +85,13 @@ const Navbar = () => {
             <div className="flex items-center space-x-4">
               <Link
                 to="/login"
-                className="text-sm hover:text-[#D4B18B] font-medium transition duration-300"
-                aria-label="Login"
+                className="text-sm hover:text-[#D4B18B] font-medium"
               >
                 Login
               </Link>
               <Link
                 to="/signup"
-                className="bg-[#B78E59] text-white text-lg font-semibold rounded-lg hover:bg-[#6D4C41] transition duration-300 py-2 px-4"
-                aria-label="Sign up"
+                className="bg-[#B78E59] text-white text-lg font-semibold rounded-lg hover:bg-[#6D4C41] py-2 px-4"
               >
                 Sign Up
               </Link>
