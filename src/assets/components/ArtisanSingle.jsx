@@ -120,6 +120,10 @@ const ArtisanSingle = () => {
     alert("Booking successful! We will contact you soon.");
   };
 
+  if (!artisan) {
+    return <div>Loading...</div>; // Add a loading state while artisan data is being set
+  }
+
   return (
     <div className="container mx-auto p-6 bg-[#3E2C29]">
       <div className="bg-white shadow-lg rounded-lg overflow-hidden flex">
@@ -170,5 +174,3 @@ const ArtisanSingle = () => {
 };
 
 export default ArtisanSingle;
-
-
