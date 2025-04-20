@@ -73,8 +73,6 @@
 //   );
 // };
 
-// export default ServiceList;
-
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -85,101 +83,93 @@ import medicalDoctor from "../img/medical-doctor.jpg";
 import careerOutlook from "../img/Career-Outlook-Medical-Lab-Technician.jpg";
 import activeBarbers from "../img/active-barbers.jpg";
 import eliteEngineering from "../img/elite-engineering.jpg";
-import mechanic from "../img/car-mechanic.jpg"; // Ensure correct file extension
+import mechanic from "../img/car-mechanic.jpg";
 
 // Hardcoded services array
 const services = [
   {
     id: 1,
     title: "Veterinary Services",
-    description:
-      "Providing expert care and treatment for all types of animals, ensuring their health and well-being. From routine check-ups to emergency treatments, we are dedicated to safeguarding the lives of your beloved pets and farm animals.",
+    description: "Expert animal care from pets to livestock.",
     image: vetinary,
   },
   {
     id: 2,
     title: "Student Auto Work",
-    description:
-      "Hands-on automotive training designed for aspiring engineers and mechanics. Gain practical experience working on real vehicles, supervised by experienced professionals in a well-equipped workshop.",
+    description: "Practical auto repair training with real cars.",
     image: mechanic,
   },
   {
     id: 3,
     title: "Kahoot Sessions",
-    description:
-      "Interactive learning sessions using Kahoot, making education engaging and fun. These sessions promote collaboration, test knowledge, and offer a unique approach to teaching and learning.",
+    description: "Fun and interactive quiz-based learning.",
     image: kahoot,
   },
   {
     id: 4,
     title: "Medical Doctor",
-    description:
-      "Our medical services are tailored to meet your health needs, with a focus on patient care and professional expertise. From general consultations to specialized treatments, our doctors are here for you.",
+    description: "General and specialized medical consultations.",
     image: medicalDoctor,
   },
   {
     id: 5,
     title: "Lab Technician",
-    description:
-      "Providing advanced diagnostic and medical testing services. Our technicians ensure accuracy and precision in lab results, supporting physicians in diagnosing and treating various conditions effectively.",
+    description: "Accurate diagnostics and lab testing.",
     image: careerOutlook,
   },
   {
     id: 6,
     title: "Barber Services",
-    description:
-      "Offering premium grooming and styling services for men. From classic cuts to modern styles, our experienced barbers use quality tools and techniques to ensure you look your best.",
+    description: "Sharp cuts, clean fades, and grooming care.",
     image: activeBarbers,
   },
   {
     id: 7,
     title: "Engineering Solutions",
-    description:
-      "Innovative and cutting-edge engineering solutions for various industries. Our team of experts is dedicated to designing, developing, and implementing projects that drive progress and efficiency.",
+    description: "Smart engineering for real-world problems.",
     image: eliteEngineering,
   },
 ];
 
 const ServiceList = () => {
-  // Display only the first 6 services
   const displayedServices = services.slice(0, 6);
 
   return (
-    <div className="mt-8">
+    <div className="mt-12 px-4 sm:px-6 md:px-12">
       {displayedServices.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
           {displayedServices.map((service) => (
             <div
               key={service.id}
-              className="bg-[#8D6E63] shadow-lg rounded-lg overflow-hidden flex flex-col transition transform hover:scale-105 hover:shadow-2xl"
+              className="bg-[#0A391D]/80 backdrop-blur-xl border border-lime-600 rounded-2xl overflow-hidden shadow-lg hover:shadow-lime-400/30 transition-all duration-300 transform hover:-translate-y-2 flex flex-col"
             >
-              {/* Image Section */}
+              {/* Image */}
               {service.image ? (
                 <img
                   src={service.image}
                   alt={service.title}
-                  className="w-full h-48 object-cover"
+                  className="w-full h-56 object-cover"
                 />
               ) : (
-                <div className="w-full h-48 bg-gray-300 flex items-center justify-center text-gray-500">
+                <div className="w-full h-56 bg-green-800 flex items-center justify-center text-white">
                   No Image Available
                 </div>
               )}
 
-              {/* Content Section */}
-              <div className="flex flex-col justify-between flex-1 p-6">
-                <div>
-                  <h3 className="text-2xl font-semibold text-white">
-                    {service.title}
-                  </h3>
-                  <p className="text-white mt-2 text-sm line-clamp-3">
-                    {service.description}
-                  </p>
-                </div>
-                <div className="mt-6 flex justify-end">
+              {/* Content */}
+              <div className="p-6 text-white flex flex-col flex-1">
+                <h3 className="text-2xl font-semibold text-lime-300 mb-2">
+                  {service.title}
+                </h3>
+                <p className="text-sm text-gray-200 mb-6">
+                  {service.description}
+                </p>
+
+                {/* Button: sticks to bottom */}
+                <div className="mt-auto">
                   <Link
-                    to={`/artisan/${service.id}`} // Route to the detail page
-                    className="bg-[#4E342E] hover:bg-[#3E2B2B] text-white font-medium py-2 px-6 rounded-full transition"
+                    to={`/artisan/${service.id}`}
+                    className="inline-block bg-lime-600 hover:bg-lime-500 text-white font-semibold px-5 py-2 rounded-full transition duration-200"
                   >
                     View Artisan
                   </Link>
@@ -189,13 +179,19 @@ const ServiceList = () => {
           ))}
         </div>
       ) : (
-        <div className="text-center text-gray-500">No services available</div>
+        <div className="text-center text-gray-400">No services available</div>
       )}
     </div>
   );
 };
 
 export default ServiceList;
+
+
+
+
+
+
 
 
 

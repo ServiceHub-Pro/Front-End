@@ -1,45 +1,59 @@
 import React from "react";
-import aboutUsImage from "../img/aboutus.jpg"; // Replace with your image path
+import aboutUsImage from "../img/aboutus.jpg";
 
 const AboutUs = () => {
   return (
-    <section className="bg-[#8D6E63] text-white py-12">
-      <div className="container mx-auto px-6 sm:px-12 lg:px-20">
-        <h2 className="text-3xl font-bold text-center mb-6">About ServiceHub</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <section className="bg-gradient-to-br from-green-950 via-green-900 to-green-800 text-white py-16">
+      <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20">
+        <h2 className="text-4xl sm:text-5xl font-bold text-center mb-12 leading-tight">
+          About <span className="text-lime-400">ServiceHub</span>
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
-          <div className="flex flex-col justify-center space-y-4">
-            <h3 className="text-xl font-semibold">Our Mission</h3>
-            <p className="text-sm leading-relaxed">
-              At ServiceHub, our mission is to bridge the gap between skilled artisans and clients
-              in need of high-quality services. We aim to create a platform where trust and
-              professionalism are the cornerstones of every interaction.
-            </p>
-            <h3 className="text-xl font-semibold">What We Do</h3>
-            <p className="text-sm leading-relaxed">
-              ServiceHub connects clients with artisans across various trades, including carpentry,
-              plumbing, masonry, and more. We facilitate seamless connections, enabling artisans to
-              thrive and clients to achieve their goals effortlessly.
-            </p>
+          <div className="space-y-8 text-gray-200">
+            <div>
+              <h3 className="text-2xl font-semibold text-lime-300 mb-2">
+                Our Mission
+              </h3>
+              <p className="text-base sm:text-lg leading-relaxed">
+                At <strong>ServiceHub</strong>, we aim to bridge the gap between skilled artisans and
+                the people who need them. With trust, transparency, and top-tier craftsmanship,
+                we’re redefining how services are found and delivered.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-2xl font-semibold text-lime-300 mb-2">
+                What We Do
+              </h3>
+              <p className="text-base sm:text-lg leading-relaxed">
+                We connect users with verified professionals in trades like plumbing, carpentry,
+                electrical work, and more. Whether it’s a small repair or a major renovation,
+                ServiceHub ensures the right hands are on the job.
+              </p>
+            </div>
           </div>
 
           {/* Image Section */}
-          <div className="flex items-center justify-center">
+          <div className="rounded-2xl overflow-hidden shadow-2xl border-2 border-lime-600">
             <img
-              src={aboutUsImage} 
+              src={aboutUsImage}
               alt="About ServiceHub"
-              className="rounded-md shadow-md w-full md:w-[90%] object-cover"
+              className="w-full h-full max-h-[500px] object-cover hover:scale-105 transition-transform duration-500 ease-in-out"
             />
           </div>
         </div>
 
         {/* Bottom Section */}
-        <div className="mt-12 text-center">
-          <h3 className="text-2xl font-semibold mb-4">Why Choose ServiceHub?</h3>
-          <p className="text-sm leading-relaxed max-w-3xl mx-auto">
-            We are dedicated to ensuring quality, reliability, and convenience in every service
-            interaction. Whether you're searching for skilled artisans or looking to grow your trade,
-            ServiceHub is the trusted partner you can rely on. Experience the difference today!
+        <div className="mt-20 text-center max-w-3xl mx-auto px-4">
+          <h3 className="text-3xl sm:text-4xl font-semibold text-lime-300 mb-4">
+            Why Choose ServiceHub?
+          </h3>
+          <p className="text-lg sm:text-xl text-gray-300 leading-relaxed">
+            We're not just a directory — we’re your service partner. With a verified network of trusted
+            artisans, ServiceHub takes the guesswork out of home repairs, upgrades, and everything in between.
+            Think of us as the middleman with manners and standards.
           </p>
         </div>
       </div>

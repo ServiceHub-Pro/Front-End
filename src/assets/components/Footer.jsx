@@ -3,48 +3,49 @@ import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#4E342E] text-white py-10">
+    <footer className="bg-gradient-to-br from-green-900 via-green-800 to-green-700 text-white py-16">
       <div className="container mx-auto px-6 sm:px-12 lg:px-20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
           {/* About Section */}
           <div>
-            <h3 className="text-xl font-bold mb-4">About Us</h3>
-            <p className="text-sm leading-relaxed">
-              ServiceHub connects skilled artisans with clients, providing top-notch services across various trades. We prioritize professionalism and quality to ensure satisfaction.
+            <h3 className="text-2xl font-bold text-lime-300 mb-4">About Us</h3>
+            <p className="text-sm text-gray-300 leading-relaxed">
+              ServiceHub bridges the gap between trusted artisans and those who need quality service, fast. From busted pipes to building dreams, we’ve got your back.
             </p>
           </div>
 
-          {/* Contact Information */}
+          {/* Contact Info */}
           <div>
-            <h3 className="text-xl font-bold mb-4">Contact</h3>
-            <ul className="space-y-2 text-sm">
+            <h3 className="text-2xl font-bold text-lime-300 mb-4">Contact</h3>
+            <ul className="space-y-2 text-sm text-gray-300">
               <li>
-                <span className="font-medium">Phone:</span>{" "}
-                <a href="tel:+233123456789" className="hover:underline hover:text-gray-300">
+                <span className="font-medium text-white">Phone:</span>{" "}
+                <a href="tel:+233123456789" className="hover:text-lime-400 hover:underline">
                   +233 123 456 789
                 </a>
               </li>
               <li>
-                <span className="font-medium">Email:</span>{" "}
-                <a href="mailto:info@servicehub.com" className="hover:underline hover:text-gray-300">
+                <span className="font-medium text-white">Email:</span>{" "}
+                <a href="mailto:info@servicehub.com" className="hover:text-lime-400 hover:underline">
                   info@servicehub.com
                 </a>
               </li>
               <li>
-                <span className="font-medium">Address:</span> Tamale, Ghana
+                <span className="font-medium text-white">Location:</span>{" "}
+                Tamale, Ghana
               </li>
             </ul>
           </div>
 
-          {/* Social Media Links */}
+          {/* Social Links */}
           <div>
-            <h3 className="text-xl font-bold mb-4">Follow Us</h3>
-            <div className="flex space-x-4 text-lg">
+            <h3 className="text-2xl font-bold text-lime-300 mb-4">Follow Us</h3>
+            <div className="flex gap-6 text-2xl">
               <a
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-gray-300 transition"
+                className="hover:text-lime-400 transition-transform duration-200 transform hover:scale-110"
               >
                 <FaFacebook />
               </a>
@@ -52,7 +53,7 @@ const Footer = () => {
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-gray-300 transition"
+                className="hover:text-lime-400 transition-transform duration-200 transform hover:scale-110"
               >
                 <FaTwitter />
               </a>
@@ -60,7 +61,7 @@ const Footer = () => {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-gray-300 transition"
+                className="hover:text-lime-400 transition-transform duration-200 transform hover:scale-110"
               >
                 <FaInstagram />
               </a>
@@ -68,7 +69,7 @@ const Footer = () => {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-gray-300 transition"
+                className="hover:text-lime-400 transition-transform duration-200 transform hover:scale-110"
               >
                 <FaLinkedin />
               </a>
@@ -76,10 +77,10 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Footer Bottom */}
-        <div className="mt-12 border-t border-gray-600 pt-4 text-center">
+        {/* Bottom bar */}
+        <div className="mt-14 border-t border-green-600 pt-6 text-center">
           <p className="text-sm text-gray-400">
-            &copy; {new Date().getFullYear()} ServiceHub. All rights reserved.
+            &copy; {new Date().getFullYear()} <span className="text-white font-semibold">ServiceHub</span>. Built with 💚 in Ghana.
           </p>
         </div>
       </div>

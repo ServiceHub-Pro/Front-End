@@ -1,0 +1,53 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="90" fill="#2E5E3A" />
+  
+  <!-- Inner circle with gradient -->
+  <circle cx="100" cy="100" r="80" fill="#4CAF50" />
+  
+  <!-- Craftsman tools forming a community circle -->
+  <g>
+    <!-- Hammer -->
+    <path d="M70 55 L85 70 L80 75 L65 60 Z" fill="#8BC34A" stroke="#1B3923" stroke-width="1" />
+    <rect x="63" y="60" width="5" height="25" fill="#33691E" stroke="#1B3923" stroke-width="1" transform="rotate(-45 63 60)" />
+    
+    <!-- Paintbrush -->
+    <path d="M125 55 L140 70 L135 75 L120 60 Z" fill="#8BC34A" stroke="#1B3923" stroke-width="1" />
+    <rect x="118" y="60" width="5" height="30" fill="#33691E" stroke="#1B3923" stroke-width="1" transform="rotate(45 118 60)" />
+    
+    <!-- Wrench -->
+    <path d="M55 100 C55 90, 65 85, 70 90 L85 105 C90 110, 85 120, 75 120 C65 120, 55 110, 55 100 Z" fill="#8BC34A" stroke="#1B3923" stroke-width="1" />
+    <circle cx="65" cy="100" r="5" fill="#2E5E3A" />
+    
+    <!-- Scissors -->
+    <ellipse cx="130" cy="105" rx="15" ry="10" fill="#8BC34A" stroke="#1B3923" stroke-width="1" transform="rotate(-30 130 105)" />
+    <ellipse cx="140" cy="115" rx="15" ry="10" fill="#8BC34A" stroke="#1B3923" stroke-width="1" transform="rotate(30 140 115)" />
+    <circle cx="125" cy="100" r="5" fill="#2E5E3A" />
+    
+    <!-- Measuring tape -->
+    <path d="M75 140 Q100 150 125 140" stroke="#1B3923" stroke-width="3" fill="none" />
+    <rect x="85" y="138" width="30" height="7" fill="#8BC34A" stroke="#1B3923" stroke-width="1" />
+    <line x1="90" y1="138" x2="90" y2="145" stroke="#1B3923" stroke-width="1" />
+    <line x1="95" y1="138" x2="95" y2="145" stroke="#1B3923" stroke-width="1" />
+    <line x1="100" y1="138" x2="100" y2="145" stroke="#1B3923" stroke-width="1" />
+    <line x1="105" y1="138" x2="105" y2="145" stroke="#1B3923" stroke-width="1" />
+    <line x1="110" y1="138" x2="110" y2="145" stroke="#1B3923" stroke-width="1" />
+  </g>
+  
+  <!-- Community representation - stylized people -->
+  <circle cx="75" cy="90" r="12" fill="#33691E" />
+  <circle cx="125" cy="90" r="12" fill="#33691E" />
+  <circle cx="100" cy="70" r="12" fill="#33691E" />
+  
+  <!-- Connecting lines representing community -->
+  <line x1="85" y1="85" x2="115" y2="85" stroke="#33691E" stroke-width="3" />
+  <line x1="80" y1="80" x2="95" y2="75" stroke="#33691E" stroke-width="3" />
+  <line x1="120" y1="80" x2="105" y2="75" stroke="#33691E" stroke-width="3" />
+  
+  <!-- House at the center representing service hub -->
+  <polygon points="100,30 120,50 120,75 80,75 80,50" fill="#8BC34A" stroke="#2E5E3A" stroke-width="2" />
+  <rect x="90" y="60" width="20" height="15" fill="#2E5E3A" />
+  
+  <!-- Text at bottom -->
+  <text x="100" y="170" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="white">SERVICE HUB</text>
+</svg>

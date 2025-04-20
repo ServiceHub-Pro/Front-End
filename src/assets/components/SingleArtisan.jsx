@@ -41,7 +41,7 @@ const ArtisanList = () => {
                 <div className="mt-6 flex justify-center">
                   <Link
                     to={`/artisan/${service.id}`}
-                    className="bg-[#4E342E] hover:bg-[#3E2B2B] text-white font-medium py-2 px-6 rounded-full transition"
+                    className="bg-green-700 hover:bg-green-600 text-white font-medium py-2 px-6 rounded-full transition"
                   >
                     View Artisan
                   </Link>

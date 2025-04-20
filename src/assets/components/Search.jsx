@@ -1,17 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import Search from "./Search";
+import { Search, Box, Briefcase } from "lucide-react";
+import SearchComponent from "./Search";
 
-const ServiceList = () => {
+const Search = () => {
   const [services, setServices] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchServices();
   }, []);
 
   const fetchServices = async () => {
+    setIsLoading(true);
+    setError(null);
     try {
       const response = await axios.get("https://servicehub-api.onrender.com/services");
       const servicesWithImages = response.data.map((service) => ({
@@ -22,12 +26,16 @@ const ServiceList = () => {
       }));
       setServices(servicesWithImages);
     } catch (error) {
+      setError("Failed to load services. Please try again later.");
       console.error("Error fetching services:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleSearch = async (query) => {
+  const handleSearch = useCallback(async (query) => {
     setIsLoading(true);
+    setError(null);
     try {
       const response = await axios.get(`https://servicehub-api.onrender.com/services/${query}`);
       const service = response.data;
@@ -44,29 +52,38 @@ const ServiceList = () => {
           : []
       );
     } catch (error) {
+      setError("Error searching for services. Please try again.");
+      setServices([]);
       console.error("Error searching for services:", error);
-      setServices([]); // Clear the list if search fails
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   return (
-    <div className="mt-8">
-      {/* Search Component */}
-      <Search onSearch={handleSearch} placeholder="Search for artisans, crafts, or services..." />
+    <div className="mt-8 px-4 sm:px-6 lg:px-8">
+      {/* Search Bar */}
+      <SearchComponent onSearch={handleSearch} placeholder="Search for artisans, crafts, or services..." />
 
-      {/* Services List */}
-      {isLoading ? (
+      {/* Loader */}
+      {isLoading && (
         <div className="text-center text-gray-500 mt-4">Loading...</div>
-      ) : services.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-6">
+      )}
+
+      {/* Error Message */}
+      {error && (
+        <div className="text-center text-red-500 mt-4">{error}</div>
+      )}
+
+      {/* Services Grid */}
+      {!isLoading && !error && services.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
           {services.map((service) => (
             <div
               key={service.id}
-              className="bg-[#8D6E63] shadow-lg rounded-lg overflow-hidden transition transform hover:scale-105 hover:shadow-2xl"
+              className="bg-green-700 shadow-lg rounded-lg overflow-hidden transition transform hover:scale-105 hover:shadow-2xl flex flex-col"
             >
-              {/* Image Display */}
+              {/* Image */}
               {service.image ? (
                 <img
                   src={service.image}
@@ -74,17 +91,29 @@ const ServiceList = () => {
                   className="w-full h-48 object-cover"
                 />
               ) : (
-                <div className="w-full h-48 bg-gray-300 flex items-center justify-center text-gray-500">
-                  No Image Available
+                <div className="w-full h-48 bg-gray-300 flex items-center justify-center text-gray-600 text-xl">
+                  📦 No Image
                 </div>
               )}
-              <div className="p-6">
-                <h3 className="text-2xl font-semibold text-white">{service.title}</h3>
-                <p className="text-white mt-2 text-sm">{service.description}</p>
-                <div className="mt-6 flex justify-center">
+
+              {/* Content */}
+              <div className="p-6 flex flex-col justify-between flex-1 space-y-4">
+                <h3 className="text-xl font-semibold text-white">{service.title}</h3>
+                <p className="text-white text-sm">{service.description}</p>
+                <div className="flex flex-wrap items-center gap-4 text-white text-sm">
+                  <div className="flex items-center gap-1">
+                    <Box className="w-4 h-4" />
+                    <span>{service.category || "General"}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Briefcase className="w-4 h-4" />
+                    <span>{service.type || "Freelance"}</span>
+                  </div>
+                </div>
+                <div className="mt-4 text-center">
                   <Link
                     to={`/artisan/${service.id}`}
-                    className="bg-[#4E342E] hover:bg-[#3E2B2B] text-white font-medium py-2 px-6 rounded-full transition"
+                    className="bg-green-600 hover:bg-green-800 text-white font-medium py-2 px-6 rounded-full transition duration-300"
                   >
                     View Artisan
                   </Link>
@@ -94,10 +123,15 @@ const ServiceList = () => {
           ))}
         </div>
       ) : (
-        <div className="text-center text-gray-500 mt-4">No services found.</div>
+        !isLoading &&
+        !error && (
+          <div className="text-center text-gray-500 mt-8 italic">
+            No services found. Maybe try a different search? 🤔
+          </div>
+        )
       )}
     </div>
   );
 };
 
-export default ServiceList;
+export default Search;
