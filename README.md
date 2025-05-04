@@ -1,8 +1,17 @@
-# React + Vite
+🛠️ Service Hub — Front-End
+This is the front-end of Service Hub, a sleek, responsive platform built to connect users with services they need—fast, smooth, and easy on the eyes.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+⚙️ Tech Stack
+React + Vite – For fast dev and sweet HMR
+HTML + CSS – Custom layouts, clean styling
+JavaScript – For that extra interactivity
+React Router – SPA navigation without reloads
+Axios / Fetch – API calls to the back-end
+Animations – CSS & JS-powered micro-interactions
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🖼️ Features
+⚡ Fast & responsive UI
+🧭 Seamless page navigation
+🎯 Service search & filters
+🧑‍💼 Service provider profiles
+📬 Contact & feedback forms
